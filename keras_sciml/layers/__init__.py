@@ -8,6 +8,23 @@ from keras_sciml.layers.operators import (
     SpectralConv1D,
     SpectralConv2D,
 )
+from keras_sciml.layers.physics import (
+    AdvectionResidual,
+    BoundaryCondition,
+    BoundsConstraint,
+    BurgersResidual,
+    ConservationConstraint,
+    Constraint,
+    DiffusionResidual,
+    DirichletBC,
+    IncompressibilityConstraint,
+    NeumannBC,
+    PeriodicBC,
+    PoissonResidual,
+    PositivityConstraint,
+    Residual,
+    RobinBC,
+)
 
 __all__ = [
     "FourierFeatures",
@@ -21,4 +38,20 @@ __all__ = [
     "Laplacian",
     "Divergence",
     "Curl",
+    "BoundaryCondition",
+    "DirichletBC",
+    "NeumannBC",
+    "RobinBC",
+    "PeriodicBC",
+    "Constraint",
+    "BoundsConstraint",
+    "PositivityConstraint",
+    "ConservationConstraint",
+    "IncompressibilityConstraint",
+    "Residual",
+    "PoissonResidual",
+    "DiffusionResidual",
+    "BurgersResidual",
+    "AdvectionResidual",
 ]
+
