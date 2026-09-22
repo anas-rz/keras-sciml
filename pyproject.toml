@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keras-sciml"
+version = "0.1.0"
+description = "Scientific Machine Learning in Keras 3"
+readme = "README.md"
+authors = [
+    { name = "Muhammad Anas Raza" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "keras>=3.0.0",
+    "numpy",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["keras_sciml*"]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests"]
+
