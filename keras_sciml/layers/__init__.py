@@ -1,4 +1,4 @@
-from keras_sciml.layers.differential import Gradient, Laplacian
+from keras_sciml.layers.differential import Curl, Divergence, Gradient, Laplacian
 from keras_sciml.layers.operators import (
     DeepONet,
     DeepONetCartesianProduct,
@@ -19,4 +19,6 @@ __all__ = [
     "DeepONetPointwise",
     "Gradient",
     "Laplacian",
+    "Divergence",
+    "Curl",
 ]
