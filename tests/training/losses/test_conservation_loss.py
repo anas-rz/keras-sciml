@@ -28,7 +28,7 @@ def test_conservation_loss_training():
     model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.03), loss=cl)
 
     initial_loss = float(model.evaluate(x_in, y_dummy, verbose=0))
-    history = model.fit(x_in, y_dummy, epochs=80, batch_size=batch_size, verbose=0)
+    history = model.fit(x_in, y_dummy, epochs=60, batch_size=batch_size, verbose=0)
     final_loss = history.history["loss"][-1]
 
     assert final_loss < initial_loss * 0.1
@@ -36,4 +36,5 @@ def test_conservation_loss_training():
     # Check predicted integral
     preds = model.predict(x_in, verbose=0)
     pred_integrals = np.sum(preds, axis=(1, 2)) * dx
-    np.testing.assert_allclose(pred_integrals, np.full(batch_size, target_integral), atol=0.25)
+    np.testing.assert_allclose(pred_integrals, np.full(batch_size, target_integral), atol=0.1)
+
