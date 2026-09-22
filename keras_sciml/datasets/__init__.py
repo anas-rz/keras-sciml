@@ -15,6 +15,11 @@ from keras_sciml.datasets.poisson import (
     generate_poisson_1d,
     generate_poisson_2d,
 )
+from keras_sciml.datasets.sea_surface_temperature import (
+    SeaSurfaceTemperatureDataset,
+    generate_synthetic_sst,
+    load_sea_surface_temperature,
+)
 
 __all__ = [
     "generate_poisson_1d",
@@ -28,5 +33,8 @@ __all__ = [
     "sample_gaussian_random_field_2d",
     "solve_darcy_2d_sample",
     "DarcyFlowDataset",
+    "generate_synthetic_sst",
+    "load_sea_surface_temperature",
+    "SeaSurfaceTemperatureDataset",
 ]
 
