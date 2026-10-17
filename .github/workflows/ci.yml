@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect Changed Files
+    runs-on: ubuntu-latest
+    outputs:
+      python: ${{ steps.filter.outputs.python }}
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check for File Changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            python:
+              - '**.py'
+              - 'pyproject.toml'
+              - 'tests/**'
+              - 'keras_sciml/**'
+              - 'examples/**'
+              - '.github/workflows/ci.yml'
+            docs:
+              - 'docs/**'
+              - 'mkdocs.yml'
+              - 'README.md'
+              - '.github/workflows/ci.yml'
+
+  test:
+    name: Test (${{ matrix.backend }}, Python ${{ matrix.python-version }})
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+        backend: ["torch", "tensorflow", "jax"]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Upgrade Pip and Build Tools
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+
+      - name: Install PyTorch Backend
+        if: matrix.backend == 'torch'
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install TensorFlow Backend
+        if: matrix.backend == 'tensorflow'
+        run: |
+          pip install tensorflow-cpu
+
+      - name: Install JAX Backend
+        if: matrix.backend == 'jax'
+        run: |
+          pip install "jax[cpu]"
+
+      - name: Install keras-sciml
+        run: |
+          pip install -e ".[test]"
+
+      - name: Run Test Suite (${{ matrix.backend }})
+        env:
+          KERAS_BACKEND: ${{ matrix.backend }}
+        run: |
+          pytest tests/ -q
+
+  docs:
+    name: Build Documentation
+    needs: changes
+    if: ${{ needs.changes.outputs.docs == 'true' || needs.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[docs,test]"
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Build MkDocs Site (--strict)
+        run: |
+          mkdocs build --strict
+

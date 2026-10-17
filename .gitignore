@@ -8,3 +8,7 @@ build/
 .coverage
 htmlcov/
 *.keras
+site/*
+.cache/
+site/
+.cache/
