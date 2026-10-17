@@ -28,6 +28,7 @@ docs = [
     "mkdocs-material>=9.5.0",
     "mkdocstrings[python]>=0.25.0",
     "pymdown-extensions>=10.7",
+    "torch",
 ]
 
 [tool.setuptools.packages.find]

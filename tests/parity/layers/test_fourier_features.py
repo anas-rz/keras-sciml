@@ -1,7 +1,8 @@
 import math
 import numpy as np
 import pytest
-import torch
+
+torch = pytest.importorskip("torch")
 import keras
 from keras import ops
 
