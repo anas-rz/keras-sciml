@@ -1,105 +1,175 @@
-# keras-sciml
+---
+hide:
+  - navigation
+  - toc
+---
 
-<p align="center">
-  <strong>Scientific Machine Learning in Keras 3</strong>
-</p>
+<div class="sciml-hero">
+  <div class="sciml-hero-badge">⚡ Scientific Machine Learning in Keras 3</div>
+  <h1>Physics & Neural Operators<br/><span class="sciml-gradient-text">Unified Across Backends</span></h1>
+  <p class="sciml-hero-subtitle">
+    Differentiable scientific computing, resolution-invariant neural operators, and physics-informed models executing identically across <strong>PyTorch</strong>, <strong>TensorFlow</strong>, and <strong>JAX</strong>.
+  </p>
+  <div class="sciml-hero-actions">
+    <a href="getting-started/quickstart/" class="md-button sciml-btn-primary">Get Started in 5 Min →</a>
+    <a href="examples/" class="md-button sciml-btn-secondary">Explore Examples</a>
+    <a href="https://github.com/anas-rz/keras-sciml" class="md-button sciml-btn-secondary" target="_blank" rel="noopener">
+      <span class="twemoji">{% include ".icons/fontawesome/brands/github.svg" %}</span> GitHub
+    </a>
+  </div>
+  <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+    <span class="badge-pill badge-torch"><span class="twemoji">{% include ".icons/fontawesome/brands/python.svg" %}</span> PyTorch Backend</span>
+    <span class="badge-pill badge-tf"><span class="twemoji">{% include ".icons/fontawesome/brands/google.svg" %}</span> TensorFlow Backend</span>
+    <span class="badge-pill badge-jax"><span class="twemoji">{% include ".icons/material/flash.svg" %}</span> JAX Backend</span>
+    <span class="badge-pill badge-success"><span class="twemoji">{% include ".icons/material/check-decagram.svg" %}</span> 217 / 217 Tests Passing</span>
+  </div>
+</div>
 
-<p align="center">
-  <em>Differentiable scientific computing, neural operators, and physics-informed deep learning across PyTorch, TensorFlow, and JAX.</em>
-</p>
+## 🌟 Core Pillars
+
+<div class="sciml-cards">
+  <div class="sciml-card">
+    <div class="sciml-card-icon">🌊</div>
+    <h3>Neural Operators</h3>
+    <p>Resolution-invariant operator learning with 1D/2D Fourier Neural Operators (<code>FNO</code>) and Deep Operator Networks (<code>DeepONet</code>). Train on coarse grids, evaluate on fine grids.</p>
+    <a href="guides/neural-operators/">Read Guide →</a>
+  </div>
+
+  <div class="sciml-card">
+    <div class="sciml-card-icon">🧮</div>
+    <h3>Differential Layers</h3>
+    <p>High-order spatial differential operators (<code>Gradient</code>, <code>Laplacian</code>, <code>Divergence</code>, <code>Curl</code>) with exact boundary handling, compatible with backpropagation across all backends.</p>
+    <a href="guides/differential-operators/">Read Guide →</a>
+  </div>
+
+  <div class="sciml-card">
+    <div class="sciml-card-icon">⚙️</div>
+    <h3>Physics-Informed Models</h3>
+    <p>Seamlessly integrate physical PDE equations into deep learning with <code>PINN</code> (with Fourier feature embeddings) and <code>PINO</code> (operator learning + PDE residual regularization).</p>
+    <a href="guides/physics-informed/">Read Guide →</a>
+  </div>
+
+  <div class="sciml-card">
+    <div class="sciml-card-icon">📉</div>
+    <h3>Scientific Losses</h3>
+    <p>Loss functions tailored for physical systems: <code>RelativeL2Loss</code>, Sobolev <code>H1Loss</code>, <code>BoundaryLoss</code>, and integral <code>ConservationLoss</code>.</p>
+    <a href="api/losses/">API Reference →</a>
+  </div>
+
+  <div class="sciml-card">
+    <div class="sciml-card-icon">📦</div>
+    <h3>Canonical Datasets</h3>
+    <p>Built-in solvers for 1D/2D Poisson, 1D viscous Burgers' equation, 2D Darcy flow, and real NOAA Sea Surface Temperature observational data.</p>
+    <a href="guides/datasets/">Browse Datasets →</a>
+  </div>
+
+  <div class="sciml-card">
+    <div class="sciml-card-icon">🧪</div>
+    <h3>Tripartite Testing</h3>
+    <p>Every single component is tested across 3 rigorous tiers: original implementation parity, smoke verification, and actual training loss convergence.</p>
+    <a href="developer/testing/">Testing Philosophy →</a>
+  </div>
+</div>
 
 ---
 
-## 🔬 What is keras-sciml?
+## ⚡ Quick Look
 
-`keras-sciml` is a scientific machine learning framework built on top of **Keras 3**. It provides reusable layers, canonical PDE datasets, and neural architectures designed for solving scientific problems, differential equations, and operator learning.
+=== "Fourier Neural Operator (FNO2D)"
 
-By leveraging Keras 3's universal backend engine, models and layers in `keras-sciml` execute seamlessly across **PyTorch**, **TensorFlow**, and **JAX** with zero code modifications.
+    ```python
+    import keras
+    from keras_sciml.models import FNO2D
+    from keras_sciml.losses import RelativeL2Loss
+    from keras_sciml.datasets import DarcyFlowDataset
+
+    # 1. Load canonical Darcy flow dataset (permeability a(x) -> pressure u(x))
+    dataset = DarcyFlowDataset(n_samples=500, resolution=32)
+    a_train, u_train = dataset.as_tuple()
+
+    # 2. Build resolution-invariant 2D Fourier Neural Operator
+    model = FNO2D(
+        modes=(12, 12),
+        width=32,
+        depth=4,
+        out_channels=1,
+        activation="gelu"
+    )
+
+    # 3. Compile with relative L2 loss
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+        loss=RelativeL2Loss(),
+    )
+
+    # 4. Train across any backend
+    model.fit(a_train, u_train, epochs=20, batch_size=16)
+    ```
+
+=== "Physics-Informed Neural Network (PINN)"
+
+    ```python
+    import keras
+    import numpy as np
+    from keras_sciml.models import PINN
+    from keras_sciml.layers.operators import FourierFeatures
+
+    # Collocation grid: solve -u''(x) = pi^2 * sin(pi * x) on [0, 1]
+    x_colloc = np.linspace(0.0, 1.0, 64)[:, None].astype(np.float32)
+    y_exact = np.sin(np.pi * x_colloc)
+
+    # PINN with random Fourier feature coordinate embedding
+    pinn = PINN(
+        hidden_layers=3,
+        hidden_units=64,
+        out_dim=1,
+        activation="tanh",
+        fourier_features=FourierFeatures(output_dim=32, scale=2.0)
+    )
+
+    pinn.compile(optimizer=keras.optimizers.Adam(1e-3), loss="mse")
+    pinn.fit(x_colloc, y_exact, epochs=30, batch_size=32)
+    ```
+
+=== "Multi-Backend Execution"
+
+    ```bash
+    # Run the exact same codebase on PyTorch, TensorFlow, or JAX:
+    export KERAS_BACKEND="torch"        # PyTorch
+    python examples/fno_darcy_flow.py
+
+    export KERAS_BACKEND="tensorflow"   # TensorFlow
+    python examples/fno_darcy_flow.py
+
+    export KERAS_BACKEND="jax"          # JAX
+    python examples/fno_darcy_flow.py
+    ```
+
+---
+
+## 🏗️ Architecture Overview
 
 ```mermaid
 graph TD
-    subgraph Keras3Backend ["Keras 3 Multi-Backend Engine"]
+    subgraph Backends ["Universal Keras 3 Engine"]
         PT["PyTorch"]
         TF["TensorFlow"]
         JX["JAX"]
     end
 
-    subgraph CoreLayers ["Scientific Layers"]
+    subgraph Layers ["Reusable Scientific Layers"]
         OP["Operators<br/>SpectralConv, FourierFeatures, DeepONet"]
         DIFF["Differential<br/>Gradient, Laplacian, Divergence, Curl"]
-        PHYS["Physics & Constraints<br/>BoundaryCondition, Residual, Constraint"]
+        PHYS["Physics<br/>BoundaryCondition, Residual, Constraint"]
     end
 
-    subgraph ScientificModels ["Architectures"]
+    subgraph Architectures ["Scientific Models"]
         FNO["Fourier Neural Operator<br/>(FNO1D, FNO2D, FNO)"]
         DON["Deep Operator Network<br/>(DeepONet)"]
-        PINN["Physics-Informed Neural Network<br/>(PINN)"]
-        PINO["Physics-Informed Neural Operator<br/>(PINO)"]
+        PINN["Physics-Informed NN<br/>(PINN)"]
+        PINO["Physics-Informed Operator<br/>(PINO)"]
     end
 
-    subgraph LossesAndData ["Losses & Data"]
-        LOSS["Losses<br/>RelativeL2, H1Loss, PhysicsLoss, BoundaryLoss"]
-        DATA["Datasets<br/>Poisson, Burgers, Darcy Flow, NOAA SST"]
-    end
-
-    Keras3Backend --> CoreLayers
-    CoreLayers --> ScientificModels
-    ScientificModels --> LossesAndData
+    Backends --> Layers
+    Layers --> Architectures
 ```
-
----
-
-## ✨ Key Features
-
-* **🌊 Neural Operators**: Resolution-invariant operator learning with 1D/2D Fourier Neural Operators (`FNO`) and Deep Operator Networks (`DeepONet`).
-* **🧮 Differentiable Differential Operators**: High-order discrete and autograd differential layers (`Gradient`, `Laplacian`, `Divergence`, `Curl`).
-* **⚙️ Physics-Informed Learning**: Native support for collocation, boundary conditions (`BoundaryCondition`), and PDE residuals (`Residual`, `PINN`, `PINO`).
-* **📉 Scientific Loss Functions**: `RelativeL2Loss`, Sobolev norm `H1Loss`, `BoundaryLoss`, and `ConservationLoss`.
-* **📦 Canonical Scientific Datasets**: Fast PDE solvers for 1D/2D Poisson, 1D viscous Burgers' equation, 2D Darcy flow, and real NOAA Sea Surface Temperature observations.
-* **🔄 True Multi-Backend Compatibility**: 100% test passing across PyTorch (`KERAS_BACKEND=torch`), TensorFlow (`KERAS_BACKEND=tensorflow`), and JAX (`KERAS_BACKEND=jax`).
-* **🧪 Rigorous Tripartite Testing**: Tested at three distinct levels: original implementation parity, shape/serialization smoke tests, and verified learning convergence.
-
----
-
-## 🚀 Quick Example: 2D Fourier Neural Operator
-
-```python
-import keras
-from keras_sciml.models import FNO2D
-from keras_sciml.losses import RelativeL2Loss
-from keras_sciml.datasets import DarcyFlowDataset
-
-# 1. Load canonical Darcy flow dataset (permeability a(x) -> pressure u(x))
-dataset = DarcyFlowDataset(n_samples=500, resolution=32)
-a_train, u_train = dataset.as_tuple()
-
-# 2. Instantiate resolution-invariant FNO2D
-model = FNO2D(
-    modes=(12, 12),
-    width=32,
-    depth=4,
-    out_channels=1,
-    activation="gelu"
-)
-
-# 3. Compile with relative L2 loss
-model.compile(
-    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
-    loss=RelativeL2Loss(),
-)
-
-# 4. Train across any backend (PyTorch, TF, JAX)
-model.fit(a_train, u_train, epochs=20, batch_size=16)
-```
-
----
-
-## 📚 Documentation Navigation
-
-* **[Installation Guide](getting-started/installation.md)**: Install `keras-sciml` and configure backends.
-* **[Quickstart](getting-started/quickstart.md)**: Build your first scientific model in 5 minutes.
-* **[Neural Operators Guide](guides/neural-operators.md)**: Theoretical foundations and implementation of FNO & DeepONet.
-* **[Physics-Informed Learning](guides/physics-informed.md)**: Solving inverse and forward PDE problems with PINNs and PINOs.
-* **[API Reference](api/operators.md)**: Comprehensive, auto-generated API reference for all layers, models, and losses.
-* **[Examples](examples/index.md)**: Runnable end-to-end scripts for benchmark physical systems.
-

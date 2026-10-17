@@ -1,34 +1,51 @@
 site_name: keras-sciml
 site_description: Scientific Machine Learning in Keras 3
 site_author: Muhammad Anas Raza
-repo_name: keras-sciml
-repo_url: https://github.com/anas-raza/keras-sciml
- 
+repo_name: anas-rz/keras-sciml
+repo_url: https://github.com/anas-rz/keras-sciml
+
 theme:
   name: material
+  icon:
+    logo: material/atom
+    repo: fontawesome/brands/github
+  font:
+    text: Inter
+    code: JetBrains Mono
   palette:
     # Scheme toggle for light mode
     - scheme: default
-      primary: indigo
-      accent: deep purple
+      primary: deep purple
+      accent: cyan
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-night
         name: Switch to dark mode
     # Scheme toggle for dark mode
     - scheme: slate
-      primary: indigo
-      accent: deep purple
+      primary: deep purple
+      accent: cyan
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-sunny
         name: Switch to light mode
   features:
     - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
+    - navigation.expand
+    - navigation.path
     - navigation.top
+    - navigation.footer
+    - toc.follow
     - search.suggest
     - search.highlight
+    - search.share
     - content.code.copy
+    - content.code.select
+    - content.code.annotate
     - content.tabs.link
 
 plugins:
@@ -48,7 +65,11 @@ plugins:
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -59,10 +80,21 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - tables
   - attr_list
   - toc:
       permalink: true
+
+extra_css:
+  - stylesheets/extra.css
 
 extra_javascript:
   - javascripts/mathjax.js
@@ -95,4 +127,3 @@ nav:
   - Developer Guide:
       - Testing Philosophy: developer/testing.md
       - Contributing: developer/contributing.md
-

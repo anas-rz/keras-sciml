@@ -1,0 +1,267 @@
+/* ==========================================================================
+   keras-sciml Theme Enhancements
+   ========================================================================== */
+
+:root {
+  --sciml-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  --sciml-gradient-dark: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
+  --sciml-accent: #06b6d4;
+  --sciml-surface: #f8fafc;
+  --sciml-border: #e2e8f0;
+}
+
+[data-md-color-scheme="slate"] {
+  --sciml-surface: #0f172a;
+  --sciml-border: #1e293b;
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section
+   -------------------------------------------------------------------------- */
+.sciml-hero {
+  padding: 3rem 1.5rem 2.5rem 1.5rem;
+  margin: -1.5rem -1.5rem 2.5rem -1.5rem;
+  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  border-bottom: 1px solid var(--sciml-border);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sciml-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+[data-md-color-scheme="slate"] .sciml-hero-badge {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.sciml-hero h1 {
+  font-size: 2.75rem !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  margin-bottom: 1rem !important;
+  letter-spacing: -0.02em;
+}
+
+.sciml-gradient-text {
+  background: var(--sciml-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sciml-hero-subtitle {
+  font-size: 1.2rem;
+  max-width: 720px;
+  margin: 0 auto 2rem auto;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.6;
+}
+
+.sciml-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sciml-btn-primary {
+  background: var(--sciml-gradient) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  padding: 0.65rem 1.6rem !important;
+  border-radius: 8px !important;
+  border: none !important;
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.sciml-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.5) !important;
+}
+
+.sciml-btn-secondary {
+  border: 1px solid var(--sciml-border) !important;
+  background: var(--md-default-bg-color) !important;
+  color: var(--md-default-fg-color) !important;
+  font-weight: 600 !important;
+  padding: 0.65rem 1.4rem !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+.sciml-btn-secondary:hover {
+  border-color: #6366f1 !important;
+  color: #6366f1 !important;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Feature Cards Grid
+   -------------------------------------------------------------------------- */
+.sciml-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.sciml-card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--sciml-border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  position: relative;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sciml-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 12px 24px -10px rgba(99, 102, 241, 0.2);
+}
+
+.sciml-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.sciml-card h3 {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+.sciml-card p {
+  font-size: 0.95rem;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  flex-grow: 1;
+}
+
+.sciml-card a {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #6366f1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sciml-card a:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Badges & Pills
+   -------------------------------------------------------------------------- */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-torch {
+  background: rgba(238, 76, 44, 0.15);
+  color: #ee4c2c;
+  border: 1px solid rgba(238, 76, 44, 0.3);
+}
+
+.badge-tf {
+  background: rgba(255, 111, 0, 0.15);
+  color: #ff6f00;
+  border: 1px solid rgba(255, 111, 0, 0.3);
+}
+
+.badge-jax {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Enhanced Tables
+   -------------------------------------------------------------------------- */
+.md-typeset table:not([class]) {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--sciml-border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.md-typeset table:not([class]) th {
+  background-color: rgba(99, 102, 241, 0.06);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+}
+
+.md-typeset table:not([class]) td {
+  padding: 0.85rem 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Mermaid Diagrams
+   -------------------------------------------------------------------------- */
+.mermaid {
+  text-align: center;
+  background: var(--sciml-surface);
+  border: 1px solid var(--sciml-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Code Blocks & Content Tabs
+   -------------------------------------------------------------------------- */
+.md-typeset .tabbed-set {
+  border-radius: 10px;
+  border: 1px solid var(--sciml-border);
+  overflow: hidden;
+}
+
+.md-typeset .highlight {
+  border-radius: 8px;
+}
+
