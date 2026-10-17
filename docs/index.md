@@ -14,14 +14,14 @@ hide:
     <a href="getting-started/quickstart/" class="md-button sciml-btn-primary">Get Started in 5 Min →</a>
     <a href="examples/" class="md-button sciml-btn-secondary">Explore Examples</a>
     <a href="https://github.com/anas-rz/keras-sciml" class="md-button sciml-btn-secondary" target="_blank" rel="noopener">
-      <span class="twemoji">{% include ".icons/fontawesome/brands/github.svg" %}</span> GitHub
+      GitHub ★
     </a>
   </div>
   <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
-    <span class="badge-pill badge-torch"><span class="twemoji">{% include ".icons/fontawesome/brands/python.svg" %}</span> PyTorch Backend</span>
-    <span class="badge-pill badge-tf"><span class="twemoji">{% include ".icons/fontawesome/brands/google.svg" %}</span> TensorFlow Backend</span>
-    <span class="badge-pill badge-jax"><span class="twemoji">{% include ".icons/material/flash.svg" %}</span> JAX Backend</span>
-    <span class="badge-pill badge-success"><span class="twemoji">{% include ".icons/material/check-decagram.svg" %}</span> 217 / 217 Tests Passing</span>
+    <span class="badge-pill badge-torch">🔥 PyTorch</span>
+    <span class="badge-pill badge-tf">⚡ TensorFlow</span>
+    <span class="badge-pill badge-jax">🚀 JAX</span>
+    <span class="badge-pill badge-success">✓ 217 / 217 Tests Passing</span>
   </div>
 </div>
 
