@@ -3,7 +3,7 @@ site_description: Scientific Machine Learning in Keras 3
 site_author: Muhammad Anas Raza
 repo_name: keras-sciml
 repo_url: https://github.com/anas-raza/keras-sciml
-
+ 
 theme:
   name: material
   palette:
