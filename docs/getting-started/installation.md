@@ -39,10 +39,16 @@ Keras 3 supports three computational backends: **PyTorch**, **TensorFlow**, and 
 
 ## 2. Installing keras-sciml
 
-Install `keras-sciml` directly from source:
+Install the latest release from PyPI:
 
 ```bash
-git clone https://github.com/anas-raza/keras-sciml.git
+pip install keras-sciml
+```
+
+Or install from source for development:
+
+```bash
+git clone https://github.com/anas-rz/keras-sciml.git
 cd keras-sciml
 pip install -e .
 ```
