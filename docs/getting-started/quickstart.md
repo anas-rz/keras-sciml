@@ -92,4 +92,4 @@ print(f"Relative L2 error vs exact solution: {l2_err:.4e}")
 
 * Explore [Neural Operators](../guides/neural-operators.md) for 2D Darcy Flow and wave equations.
 * Explore [Differential Operators](../guides/differential-operators.md) to build custom PDE residual layers.
-* Check out the [Runnable Examples](../examples/index.md) in the repository.
+* Check out the [Code Examples](../examples/index.md), each runnable as a notebook in Colab.

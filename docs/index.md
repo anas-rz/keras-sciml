@@ -133,16 +133,14 @@ hide:
 
 === "Multi-Backend Execution"
 
-    ```bash
-    # Run the exact same codebase on PyTorch, TensorFlow, or JAX:
-    export KERAS_BACKEND="torch"        # PyTorch
-    python examples/fno_darcy_flow.py
+    ```python
+    # Run the exact same code on PyTorch, TensorFlow, or JAX.
+    # Set the backend before importing keras:
+    import os
+    os.environ["KERAS_BACKEND"] = "jax"  # or "torch", "tensorflow"
 
-    export KERAS_BACKEND="tensorflow"   # TensorFlow
-    python examples/fno_darcy_flow.py
-
-    export KERAS_BACKEND="jax"          # JAX
-    python examples/fno_darcy_flow.py
+    import keras
+    from keras_sciml.models import FNO2D
     ```
 
 ---

@@ -72,6 +72,7 @@ def get_example_meta(nb_path):
         intro = " ".join(rest.strip().split("\n\n")[0].split())
         intro = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", intro)  # markdown links -> text
         description = re.split(r"(?<![ie]\.[eg]\.)(?<=[.!?])\s", intro, maxsplit=1)[0]
+        description = re.sub(r":$", ".", description)  # sentence leading into an equation
 
     models = [n for n in _imported(code, "models") if n[:1].isupper()]
     datasets = _imported(code, "datasets")
