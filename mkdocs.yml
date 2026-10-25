@@ -48,6 +48,9 @@ theme:
     - content.code.annotate
     - content.tabs.link
 
+hooks:
+  - scripts/mkdocs_hooks.py
+
 plugins:
   - search
   - mkdocstrings:
@@ -90,6 +93,7 @@ markdown_extensions:
       custom_checkbox: true
   - tables
   - attr_list
+  - md_in_html
   - toc:
       permalink: true
 
@@ -112,11 +116,9 @@ nav:
       - Scientific Datasets: guides/datasets.md
   - Examples:
       - Overview: examples/index.md
-      - 2D Darcy Flow (FNO2D): examples/darcy-flow.md
-      - 1D Burgers' Equation (FNO1D & PINO): examples/burgers.md
-      - Antiderivative Operator (DeepONet): examples/antiderivative.md
-      - 1D Poisson Equation (PINN): examples/poisson-pinn.md
-      - Sea Surface Temperature (FNO2D): examples/sea-surface-temperature.md
+      - Neural Operators: examples/neural_operators.md
+      - Physics-Informed Learning: examples/physics_informed.md
+      - Climate & Earth Science: examples/climate.md
   - API Reference:
       - Operators: api/operators.md
       - Differential Layers: api/differential.md

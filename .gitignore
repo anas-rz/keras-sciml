@@ -12,3 +12,4 @@ site/*
 .cache/
 site/
 .cache/
+docs/examples/
